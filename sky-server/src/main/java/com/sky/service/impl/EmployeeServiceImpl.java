@@ -88,13 +88,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         pageHelper.startPage(employeePageQueryDTO.getPage(), employeePageQueryDTO.getPageSize());
 
         Page<Employee> page = employeeMapper.pageQuery(employeePageQueryDTO);
-       //从pagehepper中获取分页结果,封装到pageResult中
+        //从pagehepper中获取分页结果,封装到pageResult中
         long total = page.getTotal();
         List<Employee> result = page.getResult();
         PageResult pageResult = new PageResult(total, result);
 
         return pageResult;
     }
+
     //启用禁用员工账号
     @Override
     public void startOrStop(Integer status, long id) {
@@ -110,6 +111,23 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .build();
         employeeMapper.update(employee);
 
+    }
+
+    //根据id查询员工
+    @Override
+    public Employee getById(Long id) {
+        Employee employee = employeeMapper.getById(id);
+        employee.setPassword("******");
+        return employee;
+    }
+
+    @Override
+    public void update(EmployeeDTO employeeDTO) {
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(employeeDTO, employee);
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(BaseContext.getCurrentId());
+        employeeMapper.update(employee);
     }
 
 }
