@@ -12,6 +12,8 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 
 /**
@@ -59,18 +61,22 @@ public class AutoFillAspect {
         if (operationType == OperationType.INSERT){
            try {
                //获取属性值
-               entity.getClass().getDeclaredField("createTime").set(entity,now);
-               entity.getClass().getDeclaredField("createUser").set(entity,currentId);
-               entity.getClass().getDeclaredField("updateTime").set(entity,now);
-               entity.getClass().getDeclaredField("updateUser").set(entity,currentId);
+               entity.getClass().getDeclaredMethod("setCreateTime",LocalDateTime.class).invoke(entity,now);
+              entity.getClass().getDeclaredMethod("setCreateUser",Long.class).invoke(entity,currentId);
+              entity.getClass().getDeclaredMethod("setUpdateTime",LocalDateTime.class).invoke(entity,now);
+              entity.getClass().getDeclaredMethod("setUpdateUser",Long.class).invoke(entity,currentId);
+
+
+
+
+
            } catch (Exception e) {
                e.printStackTrace();
            }
        }else if (operationType == OperationType.UPDATE){
            try {
-               //获取属性值
-               entity.getClass().getDeclaredField("updateTime").set(entity,now);
-               entity.getClass().getDeclaredField("updateUser").set(entity,currentId);
+               entity.getClass().getDeclaredMethod("setUpdateTime",LocalDateTime.class).invoke(entity,now);
+               entity.getClass().getDeclaredMethod("setUpdateUser",Long.class).invoke(entity,currentId);
            } catch (Exception e){
                e.printStackTrace();
            }
