@@ -65,5 +65,18 @@
         where a.id = #{id}
         limit 1
     </select>
+    <select id="list" resultType="com.sky.entity.Setmeal" parameterType="java.lang.Long">
+        select * from setmeal <where>
+        <if test="name!=null">
+            name like concat('%',#{name},'%')
+        </if>
+        <if test="categoryId!=null">
+            and category_id = #{categoryId}
+        </if>
+        <if test="status!=null">
+            and status = #{status}
+        </if>
+    </where>
+    </select>
 
 </mapper>

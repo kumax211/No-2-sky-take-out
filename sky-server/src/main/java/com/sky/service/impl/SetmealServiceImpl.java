@@ -136,6 +136,18 @@ public class SetmealServiceImpl implements SetmealService {
         return setmealVO;
     }
 
+    @Override
+    public List<Setmeal> list(Setmeal setmeal) {
+        List<Setmeal> list = setmealMapper.list(setmeal.getId());
+        return list;
+    }
+
+    @Override
+    public List<SetmealVO> getDishById(Long setmealId) {
+        List<SetmealVO> list = setmealMapper.getDishById(setmealId);
+        return list;
+    }
+
 
     // 修改套餐
     @Override

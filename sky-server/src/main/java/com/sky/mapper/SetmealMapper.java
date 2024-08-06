@@ -11,6 +11,8 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 /**
  * @projectName: sky-take-out
  * @package: com.sky.mapper
@@ -39,4 +41,8 @@ public interface SetmealMapper {
     void deleteAll(Long id);
 
     Setmeal getByDishId(Long id);
+
+    List<Setmeal> list(Long id);
+    @Select("select sd.name,sd.copies,d.image,d.description from setmeal_dish sd left join dish d on sd.dish_id = d.id where sd.setmeal_id = #{setmealId}")
+    List<SetmealVO> getDishById(Long setmealId);
 }
