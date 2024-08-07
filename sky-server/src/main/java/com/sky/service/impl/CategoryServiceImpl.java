@@ -15,6 +15,7 @@ import com.sky.result.PageResult;
 import com.sky.service.CategoryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -39,6 +40,9 @@ public class CategoryServiceImpl implements CategoryService {
     private DishMapper dishMapper;
     @Autowired
     private SetmealMapper setmealMapper;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Override
     public void save(CategoryDTO categoryDTO) {
